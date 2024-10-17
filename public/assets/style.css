@@ -1,0 +1,165 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?qlb13w');
+  src:  url('fonts/icomoon.eot?qlb13w#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?qlb13w') format('truetype'),
+    url('fonts/icomoon.woff?qlb13w') format('woff'),
+    url('fonts/icomoon.svg?qlb13w#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-gamepad:before {
+  content: "\e90d";
+}
+.icon-key:before {
+  content: "\e914";
+}
+.icon-menu:before {
+  content: "\e915";
+}
+.icon-comment:before {
+  content: "\e917";
+}
+.icon-envelope:before {
+  content: "\e918";
+}
+.icon-cog:before {
+  content: "\e919";
+}
+.icon-pencil:before {
+  content: "\e91a";
+}
+.icon-switch1:before {
+  content: "\e91b";
+}
+.icon-key1:before {
+  content: "\e91c";
+}
+.icon-home1:before {
+  content: "\e91d";
+}
+.icon-location:before {
+  content: "\e91e";
+}
+.icon-alarm:before {
+  content: "\e91f";
+}
+.icon-trashcan:before {
+  content: "\e920";
+}
+.icon-bolt:before {
+  content: "\e921";
+}
+.icon-paperclip:before {
+  content: "\e922";
+}
+.icon-atom:before {
+  content: "\e923";
+}
+.icon-home:before {
+  content: "\e924";
+}
+.icon-pacman:before {
+  content: "\e916";
+}
+.icon-upload:before {
+  content: "\e961";
+}
+.icon-bubbles2:before {
+  content: "\e96d";
+}
+.icon-bubble2:before {
+  content: "\e96e";
+}
+.icon-user:before {
+  content: "\e971";
+}
+.icon-users:before {
+  content: "\e972";
+}
+.icon-rocket:before {
+  content: "\e9a5";
+}
+.icon-bin:before {
+  content: "\e9ac";
+}
+.icon-power:before {
+  content: "\e9b5";
+}
+.icon-switch:before {
+  content: "\e9b6";
+}
+.icon-nintendo:before {
+  content: "\e900";
+}
+.icon-dualshock-4:before {
+  content: "\e901";
+}
+.icon-3ds:before {
+  content: "\e902";
+}
+.icon-nswitch:before {
+  content: "\e903";
+}
+.icon-pc:before {
+  content: "\e904";
+}
+.icon-dualsense:before {
+  content: "\e905";
+}
+.icon-psp:before {
+  content: "\e906";
+}
+.icon-ps-vita:before {
+  content: "\e907";
+}
+.icon-smartphone:before {
+  content: "\e908";
+}
+.icon-360:before {
+  content: "\e909";
+}
+.icon-dualshock-2:before {
+  content: "\e90a";
+}
+.icon-dualshock-3:before {
+  content: "\e90b";
+}
+.icon-xbox-classic:before {
+  content: "\e90c";
+}
+.icon-wii:before {
+  content: "\e90e";
+}
+.icon-xbox-one:before {
+  content: "\e90f";
+}
+.icon-wiiu:before {
+  content: "\e910";
+}
+.icon-wii-remote:before {
+  content: "\e911";
+}
+.icon-playstation:before {
+  content: "\e912";
+}
+.icon-xbox:before {
+  content: "\e913";
+}
