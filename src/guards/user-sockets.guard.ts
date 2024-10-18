@@ -19,6 +19,8 @@ export class UserSocketGuard implements CanActivate {
         const request = context.switchToWs();
         
         const token = this.extractTokenFromHeader(request)
+        
+        console.log(token);
 
         if(!token){
             throw new WsException("Invalid credentials")
@@ -30,6 +32,8 @@ export class UserSocketGuard implements CanActivate {
                   secret: "hard!to-guess_secret"
                 }
               );
+
+              console.log(payload);
               // 💡 We're assigning the payload to the request object here
               // so that we can access it in our route handlers
               request.getClient().user = payload.id;
