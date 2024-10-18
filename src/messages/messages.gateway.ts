@@ -82,6 +82,9 @@ export class MessagesGateway implements OnGatewayInit, OnGatewayConnection, OnGa
       this.logger.log(`Message received from client id: ${client.id}`);
       this.logger.debug(`Payload: ${payload}`);
     
+      console.log(request);
+
+      console.log(request.user);
       const message:MessageDto = {
         room: payload.room,
         user: request.user,
