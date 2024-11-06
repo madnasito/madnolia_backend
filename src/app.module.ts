@@ -10,7 +10,6 @@ import { GamesModule } from './games/games.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_PIPE } from '@nestjs/core';
-import { UsersService } from './users/users.service';
 import { MessagesModule } from './messages/messages.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -20,32 +19,37 @@ import { ServeStaticModule } from '@nestjs/serve-static';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`
+      envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
-          uri: config.get<string>('DB_URI')
-        }
-      }
+          uri: config.get<string>('DB_URI'),
+        };
+      },
     }),
     ScheduleModule.forRoot(),
     UsersModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', "public")
+      rootPath: join(__dirname, '..', 'public'),
     }),
-    JwtModule.register({
+    JwtModule.registerAsync({
       global: true,
-      secret: "hard!to-guess_secret",
-      signOptions: { expiresIn: '10d' },
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          secret: config.get<string>('JWT_SECRET'),
+          signOptions: { expiresIn: '10d' },
+        };
+      },
     }),
     AuthModule,
     MatchesModule,
     TournamentsModule,
     GamesModule,
     MessagesModule,
-    NotificationsModule
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -53,9 +57,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({
-        whitelist: true
-      })
-    }
+        whitelist: true,
+      }),
+    },
   ],
 })
 export class AppModule {}

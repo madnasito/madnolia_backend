@@ -10,7 +10,7 @@ export class Message {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     })
-    room: string;
+    to: string;
 
     @Prop({
         type: mongoose.Schema.Types.ObjectId,

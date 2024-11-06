@@ -4,7 +4,7 @@ import { IsMongoId, IsString } from "class-validator";
 
 export class CreateMessageDto extends WsException {
     @IsMongoId()
-    room: string;
+    to: string;
 
     @IsString()
     text: string;

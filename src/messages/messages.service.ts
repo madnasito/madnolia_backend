@@ -16,7 +16,7 @@ export class MessagesService {
 
     getRoomMessages(room: string, skip: number = 0) {
         const limit = 30;
-        return this.messageModel.find({room}, {}, {
+        return this.messageModel.find({to: room}, {}, {
             limit: limit,
             skip: skip * limit,
             populate: {path: 'user', select: '_id name username thumb'},
