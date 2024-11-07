@@ -6,64 +6,62 @@ export type MatchDocument = HydratedDocument<Match>;
 
 @Schema()
 export class Match {
-    
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Game',
+    required: true,
+  })
+  game: any;
 
-    @Prop({
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Game',
-        required: true
-    })
-    game: any;
+  @Prop({
+    required: true,
+  })
+  platform: number;
 
-    @Prop({
-        required: true
-    })
-    platform: number;
+  @Prop({
+    required: true,
+  })
+  date: number;
 
-    @Prop({
-        required: true
-    })
-    date: number;
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  })
+  user: mongoose.Schema.Types.ObjectId;
 
-    @Prop({
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    })
-    user: mongoose.Schema.Types.ObjectId;
+  @Prop({
+    required: true,
+    type: [mongoose.Schema.Types.ObjectId],
+  })
+  inviteds: Array<User>;
 
-    @Prop({
-        required: true,
-        type: [mongoose.Schema.Types.ObjectId]
-    })
-    inviteds: Array<User>;
+  @Prop({
+    default: '',
+  })
+  title: string;
 
-    @Prop({
-        default: ""
-    })
-    title: string;
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'User',
+    default: [],
+  })
+  likes: Array<mongoose.Schema.Types.ObjectId>;
 
-    @Prop({
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'User',
-        default: []
-    })
-    likes: Array<mongoose.Schema.Types.ObjectId>;
+  @Prop({
+    default: false,
+  })
+  private: boolean;
 
-    @Prop({
-        default: false
-    })
-    private: boolean;
+  @Prop({
+    default: true,
+  })
+  active: boolean;
 
-    @Prop({
-        default: true
-    })
-    active: boolean;
-
-    @Prop({
-        default: false
-    })
-    tournament: boolean;
+  @Prop({
+    default: false,
+  })
+  tournament: boolean;
 }
 
 export const MatchSchema = SchemaFactory.createForClass(Match);

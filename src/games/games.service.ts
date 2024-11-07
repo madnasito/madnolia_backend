@@ -43,27 +43,6 @@ export class GamesService {
     return await createdGame.save();
   };
 
-  // increaseAmountInPlatform = async (gameId: number, platform: number) => {
-
-  //     const gameDb = await this.gameModel.findOneAndUpdate({ gameId, platforms: { $elemMatch: { id: Number(platform) } } }, {
-  //         $inc: {
-  //             "platforms.$.amount": 1
-  //         }
-  //     }, { new: true })
-
-  //     if (gameDb) return gameDb
-
-  //     return await this.gameModel.findOneAndUpdate({ gameId }, {
-  //         $push: {
-  //             platforms: {
-  //                 id: platform,
-  //                 amount: 1
-  //             }
-  //         }
-  //     }, { new: true }).catch((err) => new BadGatewayException())
-
-  // }
-
   findByRawId = async (gameId: number): Promise<any> =>
     await this.gameModel.findOne({ gameId });
 
@@ -88,4 +67,7 @@ export class GamesService {
       Logger.error('Error loading game for rawg');
     }
   };
+
+  getGamesInfo = async (games: any[]) =>
+    this.gameModel.find({ _id: { $in: games } });
 }

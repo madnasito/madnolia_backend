@@ -123,15 +123,14 @@ export class MatchesService {
     this.matchModel
       .find({ user }, {}, { populate: { path: 'game' } })
       .sort({ _id: -1 })
-      .skip(0);
+      .skip(skip);
 
-  getPlayerInvitations = async (user: string, skip: number = 0) => {
-    return this.matchModel.find(
+  getPlayerInvitations = async (user: string, skip: number = 0) =>
+    this.matchModel.find(
       { inviteds: user },
       {},
-      { populate: { path: 'game' } },
+      { populate: { path: 'game' }, skip },
     );
-  };
 
   getMatchesByPlatform = async (platform: number, skip: number = 0) => {
     const results = await this.matchModel.aggregate([
@@ -166,6 +165,7 @@ export class MatchesService {
         $sort: {
           count: -1,
         },
+        $skip: skip,
       },
     ]);
     return results;
@@ -189,4 +189,17 @@ export class MatchesService {
 
     return matchesToUpdate;
   };
+
+  async getLatestGamesByUserAndPlatform(
+    user: string,
+    platform: number,
+  ): Promise<any> {
+    const distinctGameIds = await this.matchModel
+      .distinct('game', { platform, user })
+      .exec();
+
+    const games = await this.gamesService.getGamesInfo(distinctGameIds);
+
+    return games;
+  }
 }

@@ -45,6 +45,18 @@ export class MatchesController {
     return this.matchesService.getPlayerInvitations(request.user.id);
   }
 
+  @UseGuards(UserGuard)
+  @Get('latest-games/:platform')
+  async getLatestUserGames(
+    @Request() request: any,
+    @Param('platform') platform: string,
+  ) {
+    return this.matchesService.getLatestGamesByUserAndPlatform(
+      request.user.id,
+      parseInt(platform),
+    );
+  }
+
   @Get('platform/:platform')
   async getMatchesByPlatform(@Param('platform') platform: string) {
     return this.matchesService.getMatchesByPlatform(parseInt(platform));
