@@ -37,7 +37,7 @@ export class Match {
   inviteds: Array<User>;
 
   @Prop({
-    default: '',
+    default: 'Casual',
   })
   title: string;
 

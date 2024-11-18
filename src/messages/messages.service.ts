@@ -6,33 +6,40 @@ import { MessageDto } from './dtos/message.dto';
 
 @Injectable()
 export class MessagesService {
-    
-    constructor(@InjectModel(Message.name) private messageModel: Model<Message>){}
-    
-    create(createMessageDto: MessageDto) {
-        const createdMessage = new this.messageModel(createMessageDto);
-        return createdMessage.save();
-    }
+  constructor(
+    @InjectModel(Message.name) private messageModel: Model<Message>,
+  ) {}
 
-    getRoomMessages(room: string, skip: number = 0) {
-        const limit = 30;
-        return this.messageModel.find({to: room}, {}, {
-            limit: limit,
-            skip: skip * limit,
-            populate: {path: 'user', select: '_id name username thumb'},
-            sort: {_id: -1}
-        });
-    }
+  create(createMessageDto: MessageDto) {
+    const createdMessage = new this.messageModel(createMessageDto);
+    return createdMessage.save();
+  }
 
-    update(id: string, text: string){
-        if(!mongoose.Types.ObjectId.isValid(id)) throw new NotFoundException()
-        
-        return this.messageModel.findByIdAndUpdate(id, {text}, {new: true})
-    }
+  getRoomMessages(room: string, skip: number = 0) {
+    const limit = 30;
+    return this.messageModel.find(
+      { to: room },
+      {},
+      {
+        limit: limit,
+        skip: skip * limit,
+        populate: { path: 'user', select: '_id name username thumb' },
+        sort: { _id: -1 },
+      },
+    );
+  }
 
-    delete(id: string) {
-        if(!mongoose.Types.ObjectId.isValid(id)) throw new NotFoundException()
+  update(id: string, text: string) {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new NotFoundException('NO_MATCH_FOUND');
 
-        return this.messageModel.findByIdAndDelete(id)
-    }
+    return this.messageModel.findByIdAndUpdate(id, { text }, { new: true });
+  }
+
+  delete(id: string) {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new NotFoundException('NO_MATCH_FOUND');
+
+    return this.messageModel.findByIdAndDelete(id);
+  }
 }

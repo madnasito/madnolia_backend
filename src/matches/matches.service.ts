@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Match } from './schemas/match.schema';
 import mongoose, { Model } from 'mongoose';
@@ -22,7 +26,6 @@ export class MatchesService {
       createMatchDto.game,
     );
 
-    console.log(gameData);
     const newMatch: NewMatchDto = {
       date: createMatchDto.date,
       game: gameData._id,
@@ -43,12 +46,14 @@ export class MatchesService {
   };
 
   getMatch = async (id: string) => {
-    if (!mongoose.Types.ObjectId.isValid(id)) throw new NotFoundException();
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new NotFoundException('NO_MATCH_FOUND');
     return this.matchModel.findById(id);
   };
 
   getMatchWithGame = async (id: string) => {
-    if (!mongoose.Types.ObjectId.isValid(id)) throw new NotFoundException();
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new ConflictException('NO_GAME_FOUND');
     return this.matchModel.findOne(
       { _id: id },
       {},
@@ -57,7 +62,8 @@ export class MatchesService {
   };
 
   getFullMatch = async (id: string) => {
-    if (!mongoose.Types.ObjectId.isValid(id)) throw new NotFoundException();
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new NotFoundException('NO_MATCH_FOUND');
 
     const match = await this.matchModel.findOne(
       { _id: id },
@@ -84,7 +90,7 @@ export class MatchesService {
       active: true,
     });
 
-    if (!match) throw new NotFoundException('Match not found');
+    if (!match) throw new NotFoundException('NO_MATCH_FOUND');
 
     Object.assign(match, attrs);
 
@@ -92,7 +98,8 @@ export class MatchesService {
   };
 
   delete = async (id: string, user: string) => {
-    if (!mongoose.Types.ObjectId.isValid(id)) throw new NotFoundException();
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new NotFoundException('NO_MATCH_FOUND');
 
     const matchDeleted = await this.matchModel.findOneAndUpdate(
       { _id: id, active: true, user },
@@ -110,7 +117,7 @@ export class MatchesService {
       !mongoose.Types.ObjectId.isValid(id) ||
       !mongoose.Types.ObjectId.isValid(user)
     )
-      throw new NotFoundException();
+      throw new NotFoundException('USER_NOT_FOUND');
 
     return this.matchModel.findByIdAndUpdate(
       id,
@@ -151,7 +158,6 @@ export class MatchesService {
       {
         $unwind: '$gameDetails',
       },
-
       {
         $group: {
           _id: '$gameDetails._id', // Group by game ID
@@ -165,9 +171,12 @@ export class MatchesService {
         $sort: {
           count: -1,
         },
-        $skip: skip,
+      },
+      {
+        $skip: skip, // Move this out of the $sort stage
       },
     ]);
+
     return results;
   };
 

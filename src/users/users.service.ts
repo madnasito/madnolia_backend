@@ -23,11 +23,12 @@ export class UsersService {
   };
 
   fincOneById = async (id: string) => {
-    if (!mongoose.Types.ObjectId.isValid(id)) throw new NotFoundException();
+    if (!mongoose.Types.ObjectId.isValid(id))
+      throw new NotFoundException('USER_NOT_FOUND');
 
     const user = await this.userModel.findById(id);
 
-    if (!user) throw new NotFoundException();
+    if (!user) throw new NotFoundException('USER_NOT_FOUND');
 
     return user;
   };
@@ -42,9 +43,9 @@ export class UsersService {
 
   userExists = async (username: string, email: string) => {
     const usernameDb = await this.userModel.findOne({ username });
-    if (usernameDb) throw new ConflictException('Username taked');
+    if (usernameDb) throw new ConflictException('USERNAME_IN_USE');
     const emailDb = await this.userModel.findOne({ email });
-    if (emailDb) throw new ConflictException('Email taked');
+    if (emailDb) throw new ConflictException('EMAIL_IN_USE');
     return {};
   };
 
@@ -84,7 +85,7 @@ export class UsersService {
   addPartner = async (user: string, partner: string) => {
     const verifiedUser = await this.getInfo(partner);
 
-    if (!verifiedUser) throw new NotFoundException();
+    if (!verifiedUser) throw new NotFoundException('USER_NOT_FOUND');
 
     return this.userModel.findOneAndUpdate(
       { _id: user },
