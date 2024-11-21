@@ -104,6 +104,7 @@ export class UserController {
           },
         })
         .then((resp) => {
+          console.log(resp);
           if (
             resp.data.files.status == 'Success' ||
             resp.data.files.status == 'Duplicate'
@@ -116,6 +117,7 @@ export class UserController {
           throw new BadRequestException();
         })
         .catch((err) => {
+          console.log(err);
           throw new BadGatewayException(err);
         });
     } catch (error) {
