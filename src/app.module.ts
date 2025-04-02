@@ -2,19 +2,21 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { MatchesModule } from './matches/matches.module';
-import { TournamentsModule } from './tournaments/tournaments.module';
-import { GamesModule } from './games/games.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { MatchesModule } from './modules/matches/matches.module';
+import { TournamentsModule } from './modules/tournaments/tournaments.module';
+import { GamesModule } from './modules/games/games.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_PIPE } from '@nestjs/core';
-import { MessagesModule } from './messages/messages.module';
-import { NotificationsModule } from './notifications/notifications.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AppVersionModule } from './modules/app-version/app-version.module';
+import { GroupsModule } from './modules/groups/groups.module';
+import { ChatModule } from './modules/chat/chat.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -48,8 +50,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     MatchesModule,
     TournamentsModule,
     GamesModule,
-    MessagesModule,
     NotificationsModule,
+    AppVersionModule,
+    GroupsModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [
